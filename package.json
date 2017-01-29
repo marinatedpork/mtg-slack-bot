@@ -9,6 +9,8 @@
   "author": "Matthew Meyers",
   "license": "MIT",
   "devDependencies": {
-    "request": "^2.79.0"
+    "slackbots": "^1.0.2",
+    "mtg-card-renderer": "https://github.com/marinatedpork/mtg-card-renderer.git",
+    "mtgsdk": "^0.1.1"
   }
 }
