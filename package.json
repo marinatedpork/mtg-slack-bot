@@ -9,13 +9,14 @@
   "author": "Matthew Meyers",
   "license": "MIT",
   "devDependencies": {
-    "slackbots": "^1.0.2",
     "mtg-card-renderer": "https://github.com/marinatedpork/mtg-card-renderer.git",
-    "mtgsdk": "^0.1.1"
+    "mtgsdk": "^0.1.1",
+    "pryjs": "^1.0.3",
+    "slackbots": "^1.0.2",
+    "thread-sleep": "^2.0.0"
   },
   "dependencies": {
     "fs-extra": "^2.0.0",
-    "mongodb": "^2.2.24",
-    "mtg-json": "^1.0.1"
+    "mongodb": "^2.2.24"
   }
 }
