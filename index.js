@@ -1,16 +1,10 @@
 var token = require('./config/secrets');
+var parseCards = require('./util/parse-cards');
 var SlackBot = require('slackbots');
 var MTGClient = require('mtgsdk').card;
 var MTGCardRenderer = require('mtg-card-renderer');
 var Renderer = MTGCardRenderer.Renderer;
 var Serializer = MTGCardRenderer.Serializer;
-
-function parseCards(text) {
-  var PATTERN = /\[\[([\s,.'A-Za-z0-9_]+)\]\]/g;
-  return text.match(PATTERN).map(function(o) {
-    return o.replace('[[', '').replace(']]', '');
-  });
-}
 
 var bot = new SlackBot({
   token: token,
@@ -18,12 +12,13 @@ var bot = new SlackBot({
 });
 
 bot.on('start', function() {
-  // bot.postTo('testing', 'Jace is online');
 });
 
 bot.on('message', function(data) {
   console.log('=============================================');
   console.log(data);
+  var channel = data.channel;
+  var thread_ts = data.ts;
   if (data.type === 'message' && data.text) {
     console.log('IS MESSAGE');
     var matches = parseCards(data.text);
@@ -37,7 +32,7 @@ bot.on('message', function(data) {
             console.log('Deserialized:', result);
             var response = Renderer(result);
             console.log('Rendered:', response);
-            bot.postTo('testing', response);
+            bot.postMessage(channel, response, { thread_ts: thread_ts, icon_emoji: ':jace:'});
           });
         });
       });
