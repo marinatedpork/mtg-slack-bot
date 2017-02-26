@@ -12,8 +12,7 @@
     "mtg-card-renderer": "https://github.com/marinatedpork/mtg-card-renderer.git",
     "mtgsdk": "^0.1.1",
     "pryjs": "^1.0.3",
-    "slackbots": "^1.0.2",
-    "thread-sleep": "^2.0.0"
+    "slackbots": "^1.0.2"
   },
   "dependencies": {
     "co": "^4.6.0",
