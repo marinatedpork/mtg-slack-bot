@@ -1,42 +1,46 @@
-var token = require('./config/secrets');
-var parseCards = require('./util/parse-cards');
-var SlackBot = require('slackbots');
-var MTGClient = require('mtgsdk').card;
-var MTGCardRenderer = require('mtg-card-renderer');
-var Renderer = MTGCardRenderer.Renderer;
-var Serializer = MTGCardRenderer.Serializer;
+const co = require('co');
+const token = require('./config/secrets');
+const parseCards = require('./util/parse-cards');
+const SlackBot = require('slackbots');
+const { Renderer, Serializer } = require('mtg-card-renderer');
+const { MongoClient } = require('mongodb');
 
-var bot = new SlackBot({
-  token: token,
-  name: 'Jace'
-});
+const name = 'Jace';
+const icon_emoji = ':jace:';
 
-bot.on('start', function() {
-});
+co(function*() {
 
-bot.on('message', function(data) {
-  console.log('=============================================');
-  console.log(data);
-  var channel = data.channel;
-  var thread_ts = data.ts;
-  if (data.type === 'message' && data.text) {
-    console.log('IS MESSAGE');
-    var matches = parseCards(data.text);
-    console.log('MATCHES', matches);
-    if (matches.length && typeof matches === 'object') {
-      var queries = matches.forEach(function(o) {
-        console.log(1, o);
-        MTGClient.where({ name: '"' + o + '"'}).then(function(cards) {
-        console.log(2, o);
-          var success = Serializer.deserialize(cards, function(result) {
-            console.log('Deserialized:', result);
-            var response = Renderer(result);
-            console.log('Rendered:', response);
-            bot.postMessage(channel, response, { thread_ts: thread_ts, icon_emoji: ':jace:'});
-          });
-        });
-      });
-    }
+  const bot = new SlackBot({ token, name });
+  const db = yield MongoClient.connect('mongodb://localhost:27017/mtg');
+  const collection = db.collection('cards');
+
+  const template = (id) => {
+    return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${id}&type=card`;
   }
-  console.log('=============================================');
+
+  const compile = co.wrap(function*(message, name) {
+    console.log(message);
+    let { multiverseid } = yield collection.findOne({ name });
+    return message + `\n${template(multiverseid)}`;
+  });
+
+  const fn = co.wrap(function*(data) {
+    let { channel, ts: thread_ts, type, text } = data;
+    if (type === 'message' && text) {
+      console.log('=============================================');
+      let matches = parseCards(text);
+      console.log(matches);
+      if (matches.length) {
+        matches.reduce(compile, '').then((response) => {
+          bot.postMessage(channel, response, { thread_ts, icon_emoji });
+        }, (error) => {
+          console.log('ERROR!');
+          console.log(error);
+        });
+      }
+      console.log('=============================================');
+    }
+  });
+
+  bot.on('message', fn);
 });
