@@ -2,11 +2,12 @@ const co = require('co');
 const token = require('./config/secrets');
 const parseCards = require('./util/parse-cards');
 const SlackBot = require('slackbots');
-const { Renderer, Serializer } = require('mtg-card-renderer');
+const { Renderer } = require('mtg-card-renderer');
 const { MongoClient } = require('mongodb');
 
 const name = 'Jace';
 const icon_emoji = ':jace:';
+const BOT_ID = 'B3YGGGQ4W';
 
 co(function*() {
 
@@ -14,31 +15,24 @@ co(function*() {
   const db = yield MongoClient.connect('mongodb://localhost:27017/mtg');
   const collection = db.collection('cards');
 
-  const template = (id) => {
-    return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${id}&type=card`;
+  const template = ({ multiverseid }) => {
+    return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${multiverseid}&type=card`;
   }
 
-  const compile = co.wrap(function*(message, name) {
-    console.log(message);
-    let { multiverseid } = yield collection.findOne({ name });
-    return message + `\n${template(multiverseid)}`;
-  });
-
   const fn = co.wrap(function*(data) {
-    let { channel, ts: thread_ts, type, text } = data;
+    let { channel, ts: thread_ts, type, text, bot_id } = data;
+
+    if (bot_id === BOT_ID) {
+      return;
+    }
+
     if (type === 'message' && text) {
-      console.log('=============================================');
       let matches = parseCards(text);
-      console.log(matches);
       if (matches.length) {
-        matches.reduce(compile, '').then((response) => {
-          bot.postMessage(channel, response, { thread_ts, icon_emoji });
-        }, (error) => {
-          console.log('ERROR!');
-          console.log(error);
-        });
+        let cards = yield matches.map( name => collection.findOne({ name }) );
+        let response = cards.map(Renderer).join('\n');
+        bot.postMessage(channel, response, { thread_ts, icon_emoji });
       }
-      console.log('=============================================');
     }
   });
 
