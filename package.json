@@ -11,6 +11,7 @@
   "devDependencies": {
     "mtg-card-renderer": "https://github.com/marinatedpork/mtg-card-renderer.git",
     "pryjs": "^1.0.3",
+    "qunit": "^0.9.1",
     "sinon": "^1.17.7",
     "slackbots": "^1.0.2"
   },
