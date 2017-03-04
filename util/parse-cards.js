@@ -1,7 +1,8 @@
 const PATTERN = /\[\[([\s,.'A-Za-z0-9_]+)\]\]/g;
 
 module.exports = (text) => {
-  return [...new Set((text.match(PATTERN) || []).map((o) => {
-    return o.replace(/[\[\]]/g, '');
-  }))];
+  return [...new Set((text.match(PATTERN) || []).reduce((a, o) => {
+    let r = o.replace(/[\[\]]/g, '');
+    return r.trim().length ? a.concat([new RegExp(r, 'i')]) : a;
+  }, []))];
 }
