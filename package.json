@@ -10,6 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "mtg-card-renderer": "https://github.com/marinatedpork/mtg-card-renderer.git",
+    "proxyquire": "^1.7.11",
     "pryjs": "^1.0.3",
     "qunit": "^0.9.1",
     "sinon": "^1.17.7",

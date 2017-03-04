@@ -31,4 +31,4 @@ co(function*() {
   const collection = db.collection(collectionName);
   bot.on('message', message.bind(null, bot, collection, { id, icon }));
   bot.on('close', close.bind(null, db));
-});
+}).catch( error => console.log(error) );
