@@ -1,4 +1,4 @@
 secrets.js
 node_modules
-data/*
+data
 .DS_Store
