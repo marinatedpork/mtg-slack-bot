@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+KEY_DIR=${CURRENT_DIR}/../config/keys/aws_mtg
+ssh -v -i $KEY_DIR ubuntu@$(terraform output --state=${MTG_STATE}/${1}.tfstate slackbot_public_dns)
