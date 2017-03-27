@@ -14,3 +14,11 @@ variable "ami" {
 variable "environment" {
   description = "Environment of deployment"
 }
+
+variable "public_key_path" {
+  description = "Path to public key"
+}
+
+variable "key_name" {
+  description = "Name of SSH key"
+}

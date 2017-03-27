@@ -1,0 +1,13 @@
+#! /usr/local/bin/node
+
+const exec = require('child_process').exec;
+
+const [ tfCommand ] = process.argv.slice(-1);
+const stateFile = `${process.env.MTG_STATE}/mtg-develop-east.tfstate`;
+const varFile = './config/us-east-1-dev.tfvars';
+const command = `terraform ${tfCommand} --state=${stateFile} --var-file=${varFile}`;
+
+const tfExec = exec(command);
+
+tfExec.stdout.pipe(process.stdout);
+tfExec.stderr.pipe(process.stderr);
