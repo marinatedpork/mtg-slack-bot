@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Usage: "ssh-to-slackbot us-east-2-dev"
+
 set -e
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-KEY_DIR=${CURRENT_DIR}/../config/keys/aws_mtg
-ssh -v -i $KEY_DIR ubuntu@$(terraform output --state=${MTG_STATE}/${1}.tfstate slackbot_public_dns)
+PRIVATE_KEY_DIR=${CURRENT_DIR}/../config/keys/aws_mtg
+ssh -v -i $PRIVATE_KEY_DIR ubuntu@$(terraform output --state=${MTG_STATE}/${1}.tfstate slackbot_public_dns)

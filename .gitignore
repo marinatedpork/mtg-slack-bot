@@ -2,4 +2,5 @@ secrets.js
 node_modules
 data
 deploy/config
+dist
 .DS_Store

@@ -1,10 +1,14 @@
-#! /usr/local/bin/node
+#!/usr/local/bin/node
+
+/**
+ * Usage: "./utils/build plan us-east-2-dev" or "./utils/build apply us-east-2-dev"
+ */
 
 const exec = require('child_process').exec;
 
-const [ tfCommand ] = process.argv.slice(-1);
-const stateFile = `${process.env.MTG_STATE}/mtg-develop-east.tfstate`;
-const varFile = './config/us-east-1-dev.tfvars';
+const [ tfCommand, tfEnv ] = process.argv.slice(-2);
+const stateFile = `${process.env.MTG_STATE}/${tfEnv}.tfstate`;
+const varFile = `./config/${tfEnv}.tfvars`;
 const command = `terraform ${tfCommand} --state=${stateFile} --var-file=${varFile}`;
 
 const tfExec = exec(command);

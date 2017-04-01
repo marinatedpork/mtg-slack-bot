@@ -1,0 +1,25 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "{{user `source_ami`}}",
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "mtg-slack-bot-{{timestamp}}"
+  }],
+  "provisioners": [{
+    "type": "file",
+    "source": "package-configs/mongod.service",
+    "destination": "/lib/systemd/system/mongod.service"
+  }],
+  "scripts": [
+    "setup/install-node.sh",
+    "setup/install-mongo.sh"
+  ]
+}
