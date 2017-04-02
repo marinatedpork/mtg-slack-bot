@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tar -czvf ./dist/slackbot.tar.gz lib data tasks util package.json index.js config

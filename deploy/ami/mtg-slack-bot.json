@@ -11,15 +11,24 @@
     "source_ami": "{{user `source_ami`}}",
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "mtg-slack-bot-{{timestamp}}"
+    "ami_name": "mtg-slack-bot-{{user `environment`}}-{{timestamp}}"
   }],
   "provisioners": [{
     "type": "file",
     "source": "package-configs/mongod.service",
     "destination": "/lib/systemd/system/mongod.service"
+  },{
+    "type": "file",
+    "source": "package-configs/mongod.conf",
+    "destination": "/etc/mongod.conf"
+  },{
+    "type": "file",
+    "source": "../../dist/slackbot.tar.gz",
+    "destination": "/opt/slackbot.tar.gz"
   }],
   "scripts": [
     "setup/install-node.sh",
-    "setup/install-mongo.sh"
+    "setup/install-mongo.sh",
+    "setup/run-slackbot.sh"
   ]
 }

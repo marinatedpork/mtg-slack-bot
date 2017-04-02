@@ -4,6 +4,10 @@
 
 set -e
 
+sudo mkdir /var/run/mongodb
+sudo mkdir /var/log/mongodb
+sudo mkdir /var/lib/mongo
+
 echo "Getting keys ubuntu.com..."
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 
