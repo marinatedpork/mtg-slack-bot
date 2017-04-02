@@ -19,6 +19,10 @@ variable "public_key_path" {
   description = "Path to public key"
 }
 
+variable "private_key_path" {
+  description = "Path to private key"
+}
+
 variable "key_name" {
   description = "Name of SSH key"
 }

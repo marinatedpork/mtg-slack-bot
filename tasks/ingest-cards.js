@@ -15,6 +15,7 @@ const build = (dataPath) => {
 (function(dataPath) {
   co(function*() {
     console.log(`Path to data: ${dataPath}`);
+    console.log(`Mongo Url: ${mongoUrl}`);
     let db = yield MongoClient.connect(mongoUrl);
     console.log('Connecting to server');
     let collection = db.collection('cards');
@@ -24,8 +25,10 @@ const build = (dataPath) => {
     let { insertedCount } = yield collection.insertMany(cards);
     console.log(`Inserted ${insertedCount} records.`);
     db.close();
+    process.exit(0);
   }).catch(function(err) {
     console.log('Error!');
     console.log(err.stack);
+    process.exit(1);
   });
 })(process.env.PATH_TO_JSON);

@@ -5,13 +5,14 @@
 set -e
 
 echo "Untaring slackbot.tar.gz to /opt/slackbot"
+sudo mv ~/slackbot.tar.gz /opt/slackbot.tar.gz
 sudo mkdir /opt/slackbot
-tar -zxvf /opt/slackbot.tar.gz -C /opt/slackbot
-rm /opt/slackbot.tar.gz
+sudo tar -zxvf /opt/slackbot.tar.gz -C /opt/slackbot
+sudo rm /opt/slackbot.tar.gz
 
 echo "Installing Node packages..."
-cd /opt/slackbot && npm install
+cd /opt/slackbot && sudo npm install
 
 echo "Seeding database..."
-PATH_TO_JSON=./data node ./tasks/ingest-cards.js
-rm -rf data
+sudo PATH_TO_JSON=/opt/slackbot/data node /opt/slackbot/tasks/ingest-cards.js
+sudo rm -rf /opt/slackbot/data
