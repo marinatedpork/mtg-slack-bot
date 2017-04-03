@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
-# Runs the Slack Bot and pip
+# Runs the Slack Bot and pipes data to a log
 
-echo "Running the Slack Bot"
+set -e
+
+echo "Running the Slack Bot..."
 
 sudo mkdir /var/log/slackbot
-sudo nohup sh -c 'node /opt/slackbot/index.js > /var/log/slackbot/bot.log 2>&1 &'
+sudo touch /var/log/slackbot/bot.log
+sudo sh -c 'nohup node /opt/slackbot/index.js > /var/log/slackbot/bot.log 2>&1 &'
+
+echo "Bot started..."
+
+sleep 13
