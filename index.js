@@ -1,5 +1,3 @@
-console.log('Executing index.js...');
-
 /**
  * Library dependencies
  */
@@ -13,7 +11,7 @@ const { MongoClient } = require('mongodb');
  */
 
 const config = require('./config/secrets');
-const parseCards = require('./util/parse-cards');
+const logger = require('./util/logger');
 const message = require('./lib/message');
 const close = require('./lib/close');
 const start = require('./lib/start');
@@ -29,12 +27,12 @@ const { token, mongoUrl, collectionName, bot: { id, icon, name } } = config;
  */
 
 co(function*() {
-  console.log('Connecting to MongoClient...');
+  logger('[CONNECTING]: MongoClient');
   const bot = new SlackBot({ token, name });
   const db = yield MongoClient.connect(mongoUrl);
   const collection = db.collection(collectionName);
-  console.log('Firing up bot...');
+  logger('[CONNECTING]: SlackBot');
   bot.on('start', start.bind(null, bot, { icon_emoji: icon }));
   bot.on('message', message.bind(null, bot, collection, { id, icon }));
   bot.on('close', close.bind(null, db));
-}).catch( error => console.log(error) );
+}).catch( error => logger(`[ERROR]: ${error}`) );

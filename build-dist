@@ -1,3 +1,10 @@
 #!/bin/bash
 
-tar -czvf ./dist/slackbot.tar.gz lib data tasks util package.json index.js config
+if [[ "$BUILD_ENV" == "prod" ]]; then
+  tar -s "|config/secrets-prod.js|config/secrets.js|" --exclude config/secrets.js -czvf ./dist/slackbot.tar.gz lib data tasks util package.json index.js config
+  echo ""; echo "BUILT PROD"
+else
+  tar --exclude config/secrets-prod.js -czvf ./dist/slackbot.tar.gz lib data tasks util package.json index.js config
+  echo ""; echo "BUILT DEV"
+fi
+

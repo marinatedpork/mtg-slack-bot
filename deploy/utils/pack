@@ -1,0 +1,19 @@
+#!/usr/local/bin/node
+
+/**
+ *
+ * Creates AMI in AWS for a given environment.
+ *
+ * Usage:
+ *
+ *   - DEV  : pack us-east-2-dev
+ *   - PROD : BUILD_ENV="prod" pack us-east-2-prod
+ *
+ */
+
+const exec = require('child_process').execSync;
+const [ tfEnv ] = process.argv.slice(-1);
+const opts = { stdio: [0, 1, 2] };
+
+exec(`cd ../ && BUILD_ENV=${process.env.BUILD_ENV || ''} ./build-dist`, opts);
+exec(`cd ami && packer build -var-file=../config/ami-${tfEnv}.json mtg-slack-bot.json`, opts);

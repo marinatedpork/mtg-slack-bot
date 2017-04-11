@@ -1,4 +1,4 @@
-secrets.js
+config/*
 node_modules
 data
 deploy/config

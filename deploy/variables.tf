@@ -7,10 +7,6 @@ variable "slackbot_instance_type" {
   default = "t2.micro"
 }
 
-variable "ami" {
-  description = "AMI ID of EC2 instance"
-}
-
 variable "environment" {
   description = "Environment of deployment"
 }
