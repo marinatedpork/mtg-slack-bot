@@ -7,7 +7,7 @@
  * Usage:
  *
  *   - DEV  : pack us-east-2-dev
- *   - PROD : BUILD_ENV="prod" pack us-east-2-prod
+ *   - PROD : BUILD_ENV=prod pack us-east-2-prod
  *
  */
 
