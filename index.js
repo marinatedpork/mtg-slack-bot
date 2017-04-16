@@ -34,5 +34,5 @@ co(function*() {
   logger('[CONNECTING]: SlackBot');
   bot.on('start', start.bind(null, bot, { icon_emoji: icon }));
   bot.on('message', message.bind(null, bot, collection, { id, icon }));
-  bot.on('close', close.bind(null, db));
+  bot.on('close', close.bind(null, bot, db));
 }).catch( error => logger('[ERROR]', error) );
