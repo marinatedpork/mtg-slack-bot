@@ -1,3 +1,10 @@
+/**
+ * Usage:
+ *
+ * PATH_TO_JSON=/Users/m/projects/mtgjson/json PATH_TO_DESTINATION=/Users/m/projects/slack-watcher/data node ./tasks/move-cards.js
+ *
+ */
+
 const fs = require('fs');
 const copyFile = require('fs-extra').copySync;
 const path = require('path');
