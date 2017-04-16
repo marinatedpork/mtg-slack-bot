@@ -27,3 +27,10 @@ test('It handles really awkward strings', 1, function(assert) {
   const actual = ParseCards(bad);
   assert.deepEqual(expected, actual);
 });
+
+test('It handles dashes', 1, function(assert) {
+  const dashes = '[[Molimo, Maro-Sorcerer]]';
+  const expected = ['Molimo, Maro-Sorcerer'];
+  const actual = ParseCards(dashes);
+  assert.deepEqual(expected, actual);
+});
