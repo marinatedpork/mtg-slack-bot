@@ -22,3 +22,7 @@ variable "private_key_path" {
 variable "key_name" {
   description = "Name of SSH key"
 }
+
+variable "white_listed_ip" {
+  description = "The public IP that can log into the instances"
+}

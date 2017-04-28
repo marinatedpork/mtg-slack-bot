@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const co = require('co');
 const { MongoClient } = require('mongodb');
-const { mongoUrl } = require('../config/secrets');
+const { mongoUrl, collectionName } = require('../config/secrets');
 
 const build = (dataPath) => {
   return fs.readdirSync(dataPath).reduce( (accumulator, name) => {
@@ -18,7 +18,7 @@ const build = (dataPath) => {
     console.log(`Mongo Url: ${mongoUrl}`);
     let db = yield MongoClient.connect(mongoUrl);
     console.log('Connecting to server');
-    let collection = db.collection('cards');
+    let collection = db.collection(collectionName);
     console.log('Building cards');
     let cards = build(dataPath);
     console.log(`About to write ${cards.length} cards.`);

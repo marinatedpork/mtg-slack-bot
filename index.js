@@ -20,7 +20,7 @@ const start = require('./lib/start');
  * Configurations
  */
 
-const { token, mongoUrl, collectionName, bot: { id, icon, name } } = config;
+const { token, mongoUrl, collectionName, adminUser, bot: { id, icon, name } } = config;
 
 /**
  * Run the slack bot
@@ -32,7 +32,7 @@ co(function*() {
   const db = yield MongoClient.connect(mongoUrl);
   const collection = db.collection(collectionName);
   logger('[CONNECTING]: SlackBot');
-  bot.on('start', start.bind(null, bot, { icon_emoji: icon }));
+  bot.on('start', start.bind(null, bot, adminUser, { icon_emoji: icon }));
   bot.on('message', message.bind(null, bot, collection, { id, icon }));
   bot.on('close', close.bind(null, bot, db));
 }).catch( error => logger('[ERROR]', error) );

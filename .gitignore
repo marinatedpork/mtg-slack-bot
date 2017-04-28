@@ -1,6 +1,6 @@
 config/*
 node_modules
-data
+data/*
 deploy/config
-dist
+dist/*
 .DS_Store
