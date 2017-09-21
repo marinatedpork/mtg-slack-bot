@@ -20,8 +20,12 @@ function isMedia(file) {
   return file.indexOf('p') === 0;
 }
 
+function isEditorConfig(file) {
+  return file === '.editorconfig';
+}
+
 function move(file) {
-  if (isEnglish(file) && !isMedia(file)) {
+  if (isEnglish(file) && !isMedia(file) && !isEditorConfig(file)) {
     console.log(`Copying ${file}`);
     let oldPath = path.join(jsonPath, file);
     let newPath = path.join(destination, file);
