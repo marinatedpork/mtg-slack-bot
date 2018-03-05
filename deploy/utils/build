@@ -11,7 +11,9 @@ const stateFile = `${process.env.MTG_STATE}/${tfEnv}.tfstate`;
 const varFile = `./config/${tfEnv}.tfvars`;
 const command = `terraform ${tfCommand} --state=${stateFile} --var-file=${varFile}`;
 
-const tfExec = exec(command);
+console.log(command);
 
-tfExec.stdout.pipe(process.stdout);
-tfExec.stderr.pipe(process.stderr);
+// const tfExec = exec(command);
+
+// tfExec.stdout.pipe(process.stdout);
+// tfExec.stderr.pipe(process.stderr);
