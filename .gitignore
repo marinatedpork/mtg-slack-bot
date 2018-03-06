@@ -2,5 +2,6 @@ config/*
 node_modules
 data/*
 deploy/config
+deploy/.terraform
 dist/*
 .DS_Store
