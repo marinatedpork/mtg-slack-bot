@@ -10,10 +10,11 @@ const opts = { stdio: [0, 1, 2] };
 const [ tfCommand, tfEnv ] = process.argv.slice(-2);
 const stateFile = `${process.env.MTG_STATE}/${tfEnv}.tfstate`;
 const varFile = `./config/${tfEnv}.tfvars`;
-const command = `terraform ${tfCommand} --state=${stateFile} --var-file=${varFile}`;
+const command = `terraform ${tfCommand} ${tfCommand === 'apply' ? '-auto-approve' : ''} --state=${stateFile} --var-file=${varFile}`;
 
 console.log(command);
 const tfExec = exec(command);
 
 tfExec.stdout.pipe(process.stdout);
+tfExec.stdin.pipe(process.stdin);
 tfExec.stderr.pipe(process.stderr);
