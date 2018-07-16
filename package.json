@@ -14,7 +14,7 @@
     "pryjs": "^1.0.3",
     "qunit": "^0.9.1",
     "sinon": "^1.17.7",
-    "slackbots": "^1.0.2"
+    "slackbots": "https://github.com/marinatedpork/slack-bot-api.git#support/add-websocket-heartbeat"
   },
   "dependencies": {
     "co": "^4.6.0",

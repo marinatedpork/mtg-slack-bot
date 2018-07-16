@@ -7,13 +7,14 @@
  * Usage:
  *
  *   - DEV  : pack us-east-2-dev
- *   - PROD : BUILD_ENV=prod pack us-east-2-prod
+ *   - PROD : pack us-east-2-prod
  *
  */
 
 const exec = require('child_process').execSync;
 const [ tfEnv ] = process.argv.slice(-1);
 const opts = { stdio: [0, 1, 2] };
+const BUILD_ENV = tfEnv.includes('-prod') ? 'prod' : '';
 
-exec(`cd ../ && BUILD_ENV=${process.env.BUILD_ENV || ''} ./build-dist`, opts);
+exec(`cd ../ && BUILD_ENV=${BUILD_ENV} ./build-dist`, opts);
 exec(`cd ami && packer build -var-file=../config/ami-${tfEnv}.json mtg-slack-bot.json`, opts);
