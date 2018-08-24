@@ -6,8 +6,8 @@
  *
  * Usage:
  *
- *   - DEV  : pack us-east-2-dev
- *   - PROD : pack us-east-2-prod
+ *   - DEV  : pack.js us-east-2-dev
+ *   - PROD : pack.js us-east-2-prod
  *
  */
 

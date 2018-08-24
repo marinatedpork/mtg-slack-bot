@@ -1,4 +1,4 @@
-const PATTERN = /\[\[([-\s,.'A-Za-z0-9_]+)\]\]/g;
+const PATTERN = /\[\[([-\s,.'’A-Za-z0-9_]+)\]\]/g;
 
 module.exports = (text) => {
   return [...new Set((text.match(PATTERN) || []).reduce((a, o) => {

@@ -23,6 +23,7 @@ variable "key_name" {
   description = "Name of SSH key"
 }
 
-variable "white_listed_ip" {
+variable "white_listed_ips" {
+  type = "list"
   description = "The public IP that can log into the instances"
 }

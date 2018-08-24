@@ -26,9 +26,7 @@ resource "aws_security_group" "slackbot" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [
-      "${var.white_listed_ip}"
-    ]
+    cidr_blocks = "${var.white_listed_ips}"
   }
 
   egress {
