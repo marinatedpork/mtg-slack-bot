@@ -2,13 +2,13 @@ const runner = require('qunit');
 const INTEGRATION_TEST = process.env.INTEGRATION_TEST
 
 const tests = [
-  // {
-  //   code: {
-  //     path: 'util/parse-cards.js',
-  //     namespace: 'ParseCards'
-  //   },
-  //   tests: 'util/test/parse-cards-test.js'
-  // }
+  {
+    code: {
+      path: 'util/parse-cards.js',
+      namespace: 'ParseCards'
+    },
+    tests: 'util/test/parse-cards-test.js'
+  }
 ];
 
 if (INTEGRATION_TEST) {
