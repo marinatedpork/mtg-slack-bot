@@ -35,7 +35,7 @@ test('It handles dashes', 1, function(assert) {
   assert.deepEqual(expected, actual);
 });
 
-test('It smart apostrophe\'s', 1, function(assert) {
+test('It handles smart apostrophe\'s', 1, function(assert) {
   const smartApostrophe = '[[Jester’s Cap]]';
   const expected = ['Jester’s Cap'];
   const actual = ParseCards(smartApostrophe);
