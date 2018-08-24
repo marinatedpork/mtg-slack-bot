@@ -48,6 +48,17 @@ test('It finds Jester\'s Cap with "Jester’s Cap"', function(assert) {
   });
 });
 
+test('It finds Jester\'s Cap with "Jesters Cap"', function(assert) {
+  QUnit.stop();
+  Query(this.collection, 'Jesters Cap').then((result) => {
+    let actualName = result.name;
+    assert.equal('Jester\'s Cap', actualName);
+    QUnit.start();
+  }, (error) => {
+    console.log(error);
+  });
+});
+
 test('It finds Dispel', function(assert) {
   QUnit.stop();
   Query(this.collection, 'dispel').then((result) => {
