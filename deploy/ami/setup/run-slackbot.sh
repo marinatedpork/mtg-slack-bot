@@ -3,13 +3,14 @@
 # Runs the Slack Bot and pipes data to a log
 
 set -e
+echo "Cleaning up logs."
+sudo rm -rf /var/log/slackbot
+sudo mkdir -p /var/log/slackbot
 
-echo "Running the Slack Bot..."
+echo "Creating new logs."
+LOG_FILE="bot-$(date +'%m-%d-%Y').log"
+sudo touch /var/log/slackbot/${LOG_FILE}
 
-sudo mkdir /var/log/slackbot
-sudo touch /var/log/slackbot/bot.log
-sudo sh -c 'nohup node /opt/slackbot/index.js >> /var/log/slackbot/bot.log 2>&1 &'
-
-echo "Bot started..."
-
-sleep 20
+echo "Running the Slack Bot."
+sudo nohup node /opt/slackbot/index.js >> /var/log/slackbot/${LOG_FILE} 2>&1 &
+echo "Bot started."

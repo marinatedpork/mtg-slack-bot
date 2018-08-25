@@ -3,13 +3,32 @@ resource "aws_instance" "slackbot" {
   ami                    = "${data.aws_ami.slackbot.image_id}"
   key_name               = "${aws_key_pair.slackbot.id}"
   count = 1
+
   vpc_security_group_ids = [
     "${aws_security_group.slackbot.id}"
   ]
 
+  connection {
+    user = "ubuntu"
+    host = "${self.public_dns}"
+    private_key = "${file(var.private_key_path)}"
+    agent = true
+  }
+
   tags {
     Environment = "${var.environment}"
     Name        = "slackbot-${var.environment}"
+  }
+
+  provisioner "file" {
+    source = "ami/setup/setup-cron.sh"
+    destination = "~/setup-cron.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x ~/setup-cron.sh && ~/setup-cron.sh"
+    ]
   }
 }
 
@@ -34,16 +53,6 @@ resource "aws_security_group" "slackbot" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "null_resource" "slackbot" {
-  triggers {
-    slackbot_id = "${aws_instance.slackbot.id}"
-  }
-
-  provisioner "local-exec" {
-    command = "ssh -v -i ./${var.private_key_path} -o 'StrictHostKeyChecking no' ubuntu@${aws_instance.slackbot.public_dns} 'sudo sleep 10 && chmod +x ~/run-slackbot.sh && ~/run-slackbot.sh'"
   }
 }
 
