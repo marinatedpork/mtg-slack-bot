@@ -35,5 +35,4 @@ co(function*() {
   bot.on('start', start.bind(null, bot, adminUser, { icon_emoji: icon }));
   bot.on('message', message.bind(null, bot, collection, { id, icon }));
   bot.on('close', close.bind(null, bot, db));
-  eval(require('pryjs').it);
 }).catch( error => logger('[ERROR]', error) );
