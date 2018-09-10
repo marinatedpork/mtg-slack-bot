@@ -41,3 +41,13 @@ test('It handles smart apostrophe\'s', 1, function(assert) {
   const actual = ParseCards(smartApostrophe);
   assert.deepEqual(expected, actual);
 });
+
+test('It handles split cards', 2, function(assert) {
+  const splitCardOne = '[[Boom // Bust]]';
+  const splitCardTwo = '[[Boom//Bust]]';
+  const expected = ['Boom'];
+  const actualOne = ParseCards(splitCardOne);
+  const actualTwo = ParseCards(splitCardTwo);
+  assert.deepEqual(expected, actualOne);
+  assert.deepEqual(expected, actualTwo);
+});
