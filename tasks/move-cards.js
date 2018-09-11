@@ -1,7 +1,7 @@
 /**
  * Usage:
  *
- * PATH_TO_JSON=/Users/m/projects/mtgjson/json PATH_TO_DESTINATION=/Users/m/projects/slack-watcher/data node ./tasks/move-cards.js
+ * PATH_TO_JSON=/opt/mtgjson/json PATH_TO_DESTINATION=/opt/slack-watcher/data node ./tasks/move-cards.js
  *
  */
 

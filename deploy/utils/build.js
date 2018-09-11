@@ -1,7 +1,7 @@
 #!/usr/local/bin/node
 
 /**
- * Usage: "build plan us-east-2-dev" or "build apply us-east-2-dev"
+ * Usage: "build.js plan us-east-2-dev" or "build.js apply us-east-2-dev"
  */
 
 const exec = require('child_process').exec;

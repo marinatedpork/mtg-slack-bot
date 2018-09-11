@@ -26,8 +26,17 @@
     "source": "setup/run-slackbot.sh",
     "destination": "~/run-slackbot.sh"
   },{
+    "type": "file",
+    "source": "setup/ingest-cards.sh",
+    "destination": "~/ingest-cards.sh"
+  },{
+    "type": "file",
+    "source": "setup/setup-cron.sh",
+    "destination": "~/setup-cron.sh"
+  },{
     "type": "shell",
     "scripts": [
+      "setup/install-git.sh",
       "setup/install-node.sh",
       "setup/install-mongo.sh",
       "setup/setup-slackbot.sh"

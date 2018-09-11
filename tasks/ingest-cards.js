@@ -14,12 +14,14 @@ const build = (dataPath) => {
 
 (function(dataPath) {
   co(function*() {
-    console.log(`Path to data: ${dataPath}`);
-    console.log(`Mongo Url: ${mongoUrl}`);
+    console.log(`Path to data: ${dataPath}.`);
+    console.log(`Mongo Url: ${mongoUrl}.`);
     let db = yield MongoClient.connect(mongoUrl);
-    console.log('Connecting to server');
+    console.log('Connecting to server.');
     let collection = db.collection(collectionName);
-    console.log('Building cards');
+    console.log('Emptying collection.');
+    collection.remove({});
+    console.log('Building cards.');
     let cards = build(dataPath);
     console.log(`About to write ${cards.length} cards.`);
     let { insertedCount } = yield collection.insertMany(cards);
