@@ -1,5 +1,6 @@
-const { mongoUrl, collectionName } = require('../../config/secrets');
 const { MongoClient } = require('mongodb');
+const parse = require('../parse-cards');
+const { mongoUrl, collectionName } = require('../../config/secrets');
 
 QUnit.module('Query', {
   setup() {
@@ -64,6 +65,29 @@ test('It finds Dispel', function(assert) {
   Query(this.collection, 'dispel').then((result) => {
     let actualName = result.name;
     assert.equal('Dispel', actualName);
+    QUnit.start();
+  }, (error) => {
+    console.log(error);
+  });
+});
+
+test('It finds Failure', function(assert) {
+  QUnit.stop();
+  let [ parsed ] = parse('[[Failure//Comply]]');
+  Query(this.collection, parsed).then((result) => {
+    let actualName = result.name;
+    assert.equal('Failure', actualName);
+    QUnit.start();
+  }, (error) => {
+    console.log(error);
+  });
+});
+
+test('It finds Fatal Push', function(assert) {
+  QUnit.stop();
+  Query(this.collection, 'Fatal Push').then((result) => {
+    let actualName = result.name;
+    assert.equal('Fatal Push', actualName);
     QUnit.start();
   }, (error) => {
     console.log(error);
