@@ -3,7 +3,11 @@
 # Usage: "ssh-to-slackbot us-east-2-dev"
 
 set -e
+PRIVATE_KEY_DIR=${CURRENT_DIR}/../config/keys/aws_mtg
+
+if [[ ${1} = *"prod"* ]]; then
+  PRIVATE_KEY_DIR=${CURRENT_DIR}/../config/keys/aws_mtg_prod
+fi
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PRIVATE_KEY_DIR=${CURRENT_DIR}/../config/keys/aws_mtg
 ssh -v -i $PRIVATE_KEY_DIR ubuntu@$(terraform output --state=${MTG_STATE}/${1}.tfstate slackbot_public_dns)
