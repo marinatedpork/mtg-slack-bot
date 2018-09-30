@@ -5,6 +5,7 @@ LOG_FILE="ingest-$(date +'%m-%d-%Y').log"
 sudo touch /var/log/slackbot/${LOG_FILE}
 
 sudo echo "Pulling in data changes from mtgjson." >> /var/log/slackbot/${LOG_FILE} 2>&1
+cd /opt/mtgjson
 sudo git pull origin master >> /var/log/slackbot/${LOG_FILE} 2>&1
 
 sudo echo "Copying cards." >> /var/log/slackbot/${LOG_FILE} 2>&1
@@ -19,8 +20,7 @@ sudo rm -rf /opt/slackbot/data
 
 sudo echo "Killing all node processes." >> /var/log/slackbot/${LOG_FILE} 2>&1
 killall node >> /var/log/slackbot/${LOG_FILE} 2>&1 &
-sleep 1
-cd /opt/mtgjson
+sudo sleep 2
 
 sudo echo "Running ~/run-slackbot.sh." >> /var/log/slackbot/${LOG_FILE} 2>&1
 sudo ~/run-slackbot.sh
