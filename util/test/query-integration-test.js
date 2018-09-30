@@ -83,6 +83,17 @@ test('It finds Failure', function(assert) {
   });
 });
 
+test('It returns null for no results', function(assert) {
+  QUnit.stop();
+  let [ parsed ] = parse('[[SOMETHINGTHAT ISNT A CARD]]');
+  Query(this.collection, parsed).then((result) => {
+    assert.equal(null, result);
+    QUnit.start();
+  }, (error) => {
+    console.log(error);
+  });
+});
+
 test('It finds Fatal Push', function(assert) {
   QUnit.stop();
   Query(this.collection, 'Fatal Push').then((result) => {
